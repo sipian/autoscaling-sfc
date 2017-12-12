@@ -56,7 +56,7 @@ openbaton_component_autostart=true                          # Deafult is 'true' 
 #### NFVO ####
 ##############
 
-rabbitmq_broker_ip=$IP                                # Default is 'localhost' therefore if left empty ('rabbitmq_broker_ip=') or commented the 'localhost' value will be used
+rabbitmq_broker_ip=10.0.0.5                                # Default is 'localhost' therefore if left empty ('rabbitmq_broker_ip=') or commented the 'localhost' value will be used
 rabbitmq_management_port=15672                              # Default is '15672' therefore if left empty ('rabbitmq_management_port=') or commented the '15672' value will be used
 openbaton_nfvo_ip=localhost                                 # Default is 'localhost' therefore if left empty ('openbaton_nfvo_ip=') or commented the 'localhost' value will be used
 openbaton_admin_password=openbaton                          # Default is 'openbaton' therefore if left empty ('openbaton_admin_password=') or commented the 'openbaton' value will be used
@@ -116,7 +116,6 @@ zabbix_user_password=                                       # Default is 'zabbix
   sh <(curl -s http://get.openbaton.org/bootstrap) release --config-file=$file
   cd ..
   rm -rf openbaton_installation/
-  rm current_openbaton.config
 }
 
 
@@ -144,7 +143,13 @@ function install_zabbixserver {
 
 
   echo "Follow the remaining steps after zcat from this link https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-zabbix-to-securely-monitor-remote-servers-on-ubuntu-16-04#step-1-%E2%80%94-installing-the-zabbix-server"
-  sleep 3
+  sudo systemctl restart apache2
+  sudo systemctl start zabbix-server
+  sudo systemctl status zabbix-server
+  sudo systemctl enable zabbix-server
+
+
+sleep 3
 }
 
 install_dependences

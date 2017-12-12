@@ -14,13 +14,35 @@
       "name": "http-sf",
       "type": "http",
       "endpoint": "generic",
+      "lifecycle_event": [
+        {
+          "event": "INSTANTIATE",
+          "lifecycle_events": [
+            "configure.sh",
+            "start_vxlan.sh"
+          ]
+        }
+      ],
+
+      "virtual_link": [
+        {
+          "name": "private"
+        }
+      ],
+      "deployment_flavour": [
+        {
+          "flavour_key": "m1.small"
+        }
+      ],
+      "vnfPackageLocation": "https://github.com/mah88/SF_VNF_scripts.git",
+      
       "vdu": [
         {
           "vm_image": [
             "ubuntu"
           ],
           "vimInstanceName": [
-            "pop"
+            "test"
           ],
           "scale_in_out": 4,
           "vnfc": [
@@ -32,33 +54,10 @@
                 }
               ]
             }
-          ],
-          "fault_management_policy": [
-            {
-              "name": "SERVICE FUNCTION is not reachable",
-              "isVNFAlarm": false,
-              "criteria": [
-                {
-                  "parameter_ref": "agent.ping",
-                  "function": "nodata(40)",
-                  "vnfc_selector": "at_least_one",
-                  "comparison_operator": "=",
-                  "threshold": "1"
-                }
-              ],
-              "period": 20,
-              "severity": "CRITICAL"
-            }
-          ],
-          "high_availability": {
-            "resiliencyLevel": "ACTIVE_STANDBY_STATELESS",
-            "redundancyScheme": "1:N"
-          },
-          "monitoring_parameter": [
-            "agent.ping"
           ]
         }
       ],
+      
       "auto_scale_policy": [
         {
           "name": "scale-out",
@@ -84,27 +83,7 @@
             }
           ]
         }
-      ],
-      "virtual_link": [
-        {
-          "name": "private"
-        }
-      ],
-      "lifecycle_event": [
-        {
-          "event": "INSTANTIATE",
-          "lifecycle_events": [
-            "configure.sh",
-            "start_vxlan.sh"
-          ]
-        }
-      ],
-      "deployment_flavour": [
-        {
-          "flavour_key": "m1.small"
-        }
-      ],
-      "vnfPackageLocation": "https://github.com/mah88/SF_VNF_scripts.git"
+      ]
     }
   ]
 }
