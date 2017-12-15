@@ -294,9 +294,15 @@ src_checkout_nfvo () {
     fi
 
     echo " * Downloading Open Baton NFVO .."
-    git clone --recursive https://github.com/mah88/NFVO.git "${OPENBATON_NFVO_DIR}"
+    git clone --recursive "${OPENBATON_NFVO_REPO_URL}" "${OPENBATON_NFVO_DIR}"    
     cd "${OPENBATON_NFVO_DIR}"
 
+    mv ./dashboard ../
+    git checkout ${nfvo_version}
+    mv ../dashboard ./dashboard
+    cd dashboard
+    git checkout 3.2.0
+    cd ../
     git submodule init
     git submodule update
 
@@ -307,6 +313,10 @@ src_checkout_nfvo () {
     $_ex 'rm -rf '"${OPENBATON_BASE_CONFIG_DIR}; mkdir -p ${OPENBATON_BASE_CONFIG_DIR}"
     $_ex 'chown -R '"${USER}:${USER} ${OPENBATON_BASE_CONFIG_DIR}"
     $_ex 'cp '"${OPENBATON_NFVO_DIR}/main/src/main/resources/application.properties ${OPENBATON_BASE_CONFIG_DIR}/${OPENBATON_NFVO_CONFIG_FILE}"
+    echo "  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ "
+    echo cat $(cat ${OPENBATON_BASE_CONFIG_DIR}/${OPENBATON_NFVO_CONFIG_FILE})
+    echo "  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ "
+    sleep 3 
     $_ex 'cp '"${OPENBATON_NFVO_DIR}/etc/keystore.p12 ${OPENBATON_BASE_CONFIG_DIR}/keystore.p12"
     mkdir -p ${OPENBATON_PLUGINS_VIMDRIVERS_DIR}
 }
