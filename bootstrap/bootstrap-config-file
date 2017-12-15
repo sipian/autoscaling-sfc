@@ -38,7 +38,7 @@ openbaton_nfvo_mysql_user_password=root                 # Default is 'root' ther
 openbaton_plugin_vimdriver_openstack=yes                    # Default is 'YES' therefore if left empty ('openbaton_plugin_vimdriver_openstack=') or commented the 'openbaton_plugin_vimdriver_openstack' debian package will be installed
 openbaton_vnfm_generic=yes                                  # Default is 'YES' therefore if left empty ('openbaton_vnfm_generic=') or commented the 'openbaton_vnfm_generic' debian package will be installed
 openbaton_fms=no                                           # Default is 'NO' therefore if left empty ('openbaton_fms=') or commented the 'openbaton_fms' debian package will NOT be installed
-openbaton_ase=no                                           # Default is 'NO' therefore if left empty ('openbaton_ase=') or commented the 'openbaton_ase' debian package will NOT be installed
+openbaton_ase=yes                                           # Default is 'NO' therefore if left empty ('openbaton_ase=') or commented the 'openbaton_ase' debian package will NOT be installed
 openbaton_nse=no                                           # Default is 'NO' therefore if left empty ('openbaton_nse=') or commented the 'openbaton_nse' debian package will NOT be installed
 openbaton_cli=yes                                           # Default is 'NO' therefore if left empty ('openbaton_cli=') or commented the 'openbaton_cli' debian package will NOT be installed
 

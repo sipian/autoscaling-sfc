@@ -179,7 +179,7 @@ src_checkout_nfvo () {
     fi
 
     echo " * Downloading Open Baton NFVO .."
-    git clone https://github.com/mah88/NFVO.git "${OPENBATON_NFVO_DIR}"
+    git clone --recursive https://github.com/mah88/NFVO.git "${OPENBATON_NFVO_DIR}"
     cd "${OPENBATON_NFVO_DIR}"
 
     $_ex 'rm -rf '"${OPENBATON_BASE_CONFIG_DIR}; mkdir -p ${OPENBATON_BASE_CONFIG_DIR}"
