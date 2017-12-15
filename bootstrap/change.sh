@@ -1,6 +1,10 @@
 #!/bin/bash
 
 
+x=$(cat /etc/hostname)
+sudo sed -i "1s/.*/127.0.0.1 localhost $x/" /etc/hosts
+echo "changing hostname --> $x"
+
 ip=$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)
 
 line=$(sudo grep -n "rabbitmq_broker_ip=" bootstrap-config-file | sed 's/^\([0-9]\+\):.*$/\1/')
