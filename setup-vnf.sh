@@ -3,7 +3,7 @@ read -p "Enter Your public IP address: " IP
 password="root"
 
 function install_dependences {
-  sudo apt-get upgrade
+  sudo apt-get -y upgrade
   sudo apt-get update
 
   sudo apt-get install -y curl
@@ -29,6 +29,9 @@ function install_dependences {
   sudo systemctl restart apache2
   sudo systemctl status apache2
   sleep 3
+  x=$(cat /etc/hostname)
+sudo sed -i "1s/.*/127.0.0.1 localhost $x/" /etc/hosts
+echo "changing hostname --> $x"
 }
 
 function install_openbaton {
