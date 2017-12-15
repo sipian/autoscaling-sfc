@@ -32,10 +32,10 @@ RABBITMQ_BROKER_IP_DEFAULT=localhost
 RABBITMQ_MANAGEMENT_PORT_DEFAULT=15672
 OPENBATON_ADMIN_PASSWORD_DEFAULT=openbaton
 
-OPENBATON_NFVO_IP_DEFAULT=localhost
+OPENBATON_NFVO_IP_DEFAULT=$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)
 
 OPENBATON_FMS_MYSQL_USER_DEFAULT=fmsuser
-OPENBATON_FMS_MYSQL_USER_PASSWORD_DEFAULT=changeme
+OPENBATON_FMS_MYSQL_USER_PASSWORD_DEFAULT=root
 OPENBATON_MYSQL_ROOT_PASSWORD_DEFAULT=root
 
 
@@ -415,13 +415,13 @@ src_fms_configure_nfvo () {
 }
 
 src_fms_configure_mysql () {
-    # In case of "noninteractive" FRONTEND the default value will remain valid (openbaton_fms_mysql_user: fmsuser ; openbaton_fms_mysql_user_password: changeme)
+    # In case of "noninteractive" FRONTEND the default value will remain valid (openbaton_fms_mysql_user: fmsuser ; openbaton_fms_mysql_user_password: root)
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
         read -p " * Please, type the name of the MySQL user you would like the Open Baton FMS to use [fmsuser]: " openbaton_fms_mysql_user
 
         # Turning echo ON and OFF between password reading
         stty -echo
-        read -p " * Please, provide the password for this user [changeme]: " openbaton_fms_mysql_user_password ; echo
+        read -p " * Please, provide the password for this user [root]: " openbaton_fms_mysql_user_password ; echo
         stty echo
 
         # Turning echo ON and OFF batween password reading

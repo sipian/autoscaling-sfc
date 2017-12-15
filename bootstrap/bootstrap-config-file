@@ -19,7 +19,7 @@ openbaton_component_autostart=true                          # Deafult is 'true' 
 #### NFVO ####
 ##############
 
-rabbitmq_broker_ip=10.0.0                                # Default is 'localhost' therefore if left empty ('rabbitmq_broker_ip=') or commented the 'localhost' value will be used
+rabbitmq_broker_ip=                               # Default is 'localhost' therefore if left empty ('rabbitmq_broker_ip=') or commented the 'localhost' value will be used
 rabbitmq_management_port=15672                              # Default is '15672' therefore if left empty ('rabbitmq_management_port=') or commented the '15672' value will be used
 openbaton_nfvo_ip=localhost                                 # Default is 'localhost' therefore if left empty ('openbaton_nfvo_ip=') or commented the 'localhost' value will be used
 openbaton_admin_password=openbaton                          # Default is 'openbaton' therefore if left empty ('openbaton_admin_password=') or commented the 'openbaton' value will be used

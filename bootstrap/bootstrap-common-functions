@@ -34,7 +34,7 @@ OPENJDK_7_OSX_SECURITYFILE="/Library/Java/JavaVirtualMachines/jdk1.7.*.jdk/Conte
 HTTPS_DEFAULT=no
 MYSQL_DEFAULT=yes
 OPENBATON_NFVO_MYSQL_USER_DEFAULT=admin
-OPENBATON_NFVO_MYSQL_USER_PASSWORD_DEFAULT=changeme
+OPENBATON_NFVO_MYSQL_USER_PASSWORD_DEFAULT=root
 MYSQL_ROOT_PASSWORD_DEFAULT=root
 
 OPENBATON_BASE_CONFIG_DIR="/etc/openbaton"
@@ -153,13 +153,13 @@ configure_mysql () {
 
     # Enable MySQL
 
-    # In case of "noninteractive" FRONTEND the default value will remain valid (openbaton_nfvo_mysql_user: admin ; openbaton_nfvo_mysql_user_password: changeme)
+    # In case of "noninteractive" FRONTEND the default value will remain valid (openbaton_nfvo_mysql_user: admin ; openbaton_nfvo_mysql_user_password: root)
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
         read -p " * Please, type the name of the MySQL user you would like the Open Baton NFVO to use [admin]: " openbaton_nfvo_mysql_user
 
         # Turning echo ON and OFF between password reading
         stty -echo
-        read -p " * Please, provide the password for this user [changeme]: " openbaton_nfvo_mysql_user_password ; echo
+        read -p " * Please, provide the password for this user [root]: " openbaton_nfvo_mysql_user_password ; echo
         stty echo
 
         # Turning echo ON and OFF batween password reading
@@ -174,7 +174,7 @@ configure_mysql () {
 
     # Set the mysql user's password
     export openbaton_nfvo_mysql_user_password=${openbaton_nfvo_mysql_user_password:-$OPENBATON_NFVO_MYSQL_USER_PASSWORD_DEFAULT}
-    $_ex 'sed -i "s|spring.datasource.password\s*=\s*changeme|spring.datasource.password=${openbaton_nfvo_mysql_user_password}|g" /etc/openbaton/${properties_file_name}'
+    $_ex 'sed -i "s|spring.datasource.password\s*=\s*root|spring.datasource.password=${openbaton_nfvo_mysql_user_password}|g" /etc/openbaton/${properties_file_name}'
 
     result=$(ps aux | grep -v 'grep' | grep 'mysql' | wc -l)
     if [ ${result} -le 0 ]; then
