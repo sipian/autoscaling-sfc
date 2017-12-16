@@ -141,11 +141,6 @@ function install_zabbixserver {
   line=$(sudo grep -n "# DBPassword=" /etc/zabbix/zabbix_server.conf | sed 's/^\([0-9]\+\):.*$/\1/')
   sudo sed -i '${line}s/.*/DBPassword=root/' /etc/zabbix/zabbix_server.conf
 
-  line=$(sudo grep -n "# php_value date.timezone Europe/Riga" /etc/zabbix/apache.conf | sed 's/^\([0-9]\+\):.*$/\1/')
-  sudo sed -i '${line}s/.*/# php_value date.timezone Asia/Kolkata' /etc/zabbix/zabbix_server.conf
-
-
-  echo "Follow the remaining steps after zcat from this link https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-zabbix-to-securely-monitor-remote-servers-on-ubuntu-16-04#step-1-%E2%80%94-installing-the-zabbix-server"
   sudo systemctl restart apache2
   sudo systemctl start zabbix-server
   sudo systemctl status zabbix-server
