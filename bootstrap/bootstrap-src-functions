@@ -25,7 +25,7 @@ OPENBATON_PLUGINS_VIMDRIVERS_DIR="${OPENBATON_PLUGINS_DIR}/vim-drivers"
 
 OPENBATON_SRC_INTERNAL_PLUGIN_CONF_FILE="src/main/resources/plugin.conf.properties"
 
-RABBITMQ_BROKER_IP_DEFAULT=$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)
+RABBITMQ_BROKER_IP_DEFAULT="$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)"
 RABBITMQ_MANAGEMENT_PORT_DEFAULT=15672
 OPENBATON_ADMIN_PASSWORD_DEFAULT=openbaton
 
