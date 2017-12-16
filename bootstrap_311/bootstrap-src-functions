@@ -134,7 +134,11 @@ src_checkout_nfvo () {
     echo "Getting OpenBaton..."
     src_create_openbaton_base
     src_create_openbaton_log
-    git clone -b tags/3.0.1 "${_openbaton_base_repo}" "${_nfvo}"
+    git clone "${_openbaton_base_repo}" "${_nfvo}"
+
+    cd "${_nfvo}"
+    rm ./dashboard
+    git checkout tags/3.0.1
 
     $_ex 'rm -rf '"${_openbaton_conf}; mkdir -p ${_openbaton_conf}"
     $_ex 'cp '"${_nfvo}/etc/openbaton.properties ${_openbaton_conf}/openbaton.properties"
