@@ -215,13 +215,13 @@ install_mysql () {
 ##############
 
 main_src () {
-    wget "${OPENBATON_BOOTSTRAP_SRC_FUNCTIONS_URL}"
+    #wget "${OPENBATON_BOOTSTRAP_SRC_FUNCTIONS_URL}"
     . ./bootstrap-src-functions
     src_bootstrap
 }
 
 main_deb () {
-    wget "${OPENBATON_BOOTSTRAP_DEB_FUNCTIONS_URL}"
+    #wget "${OPENBATON_BOOTSTRAP_DEB_FUNCTIONS_URL}"
     . ./bootstrap-deb-functions
     deb_bootstrap ${1}
 }
