@@ -15,7 +15,13 @@ chmod +x bootstrap
 chmod +x bootstrap-common-functions
 chmod +x bootstrap-deb-functions
 chmod +x bootstrap-src-functions
-./bootstrap develop --config-file=/home/ubuntu/autoscaling-sfc/bootstrap/bootstrap-config-file
 
 
-git clone https://sipian:github_Bbarcelona_6@github.com/sipian/autoscaling-sfc.git
+echo "Type 1 for latest , 2 for oldest , followed by [ENTER]:"
+read choice
+    
+if [ "$choice" = "1" ]; then
+./bootstrap develop --config-file=/home/ubuntu/autoscaling-sfc/bootstrap/bootstrap-config-file-latest
+else
+./bootstrap develop --config-file=/home/ubuntu/autoscaling-sfc/bootstrap/bootstrap-config-file-oldest
+fi

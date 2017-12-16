@@ -25,7 +25,7 @@ OPENBATON_PLUGINS_VIMDRIVERS_DIR="${OPENBATON_PLUGINS_DIR}/vim-drivers"
 
 OPENBATON_SRC_INTERNAL_PLUGIN_CONF_FILE="src/main/resources/plugin.conf.properties"
 
-RABBITMQ_BROKER_IP_DEFAULT=$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)
+RABBITMQ_BROKER_IP_DEFAULT=localhost
 RABBITMQ_MANAGEMENT_PORT_DEFAULT=15672
 OPENBATON_ADMIN_PASSWORD_DEFAULT=openbaton
 
@@ -294,19 +294,40 @@ src_checkout_nfvo () {
     fi
 
     echo " * Downloading Open Baton NFVO .."
-    git clone --recursive https://github.com/mah88/NFVO.git "${OPENBATON_NFVO_DIR}"
-    cd "${OPENBATON_NFVO_DIR}"
-
+    
+    echo "Type 1 for mah88 , 2 for openbaton/nfvo.git , followed by [ENTER]:"
+    read choice
+    
+    if [ "$choice" = "1" ]; then
+        echo "cloning https://github.com/mah88/nfvo"
+	git clone --recursive https://github.com/mah88/nfvo "${OPENBATON_NFVO_DIR}"    
+        cd "${OPENBATON_NFVO_DIR}"
+    else
+        echo "cloning https://github.com/openbaton/nfvo"
+    	git clone --recursive "${OPENBATON_NFVO_REPO_URL}" "${OPENBATON_NFVO_DIR}"    
+    	cd "${OPENBATON_NFVO_DIR}"
+    	mv ./dashboard ../
+    	git checkout ${nfvo_version}
+    	mv ../dashboard ./dashboard
+    fi
+    
     git submodule init
     git submodule update
-
-    line=$(sudo grep -n "nfvo.rabbit.brokerIp = localhost" ${OPENBATON_NFVO_DIR}/main/src/main/resources/application.properties | sed 's/^\([0-9]\+\):.*$/\1/')
-    ip=$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)
-    sudo sed -i "${line}s/.*/nfvo.rabbit.brokerIp = ${ip}/" ${OPENBATON_NFVO_DIR}/main/src/main/resources/application.properties
+    
+    line=$(sudo grep -n "compile project(':main')" build.gradle | sed 's/^\([0-9]\+\):.*$/\1/')
+    sudo sed -i "${line}s/.*/compile project(':main')\ncompile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '1.1.7'/" build.gradle 
+    
+    #line=$(sudo grep -n "nfvo.rabbit.brokerIp = localhost" ${OPENBATON_NFVO_DIR}/main/src/main/resources/application.properties | sed 's/^\([0-9]\+\):.*$/\1/')
+    #ip="$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)"
+    #sudo sed -i "${line}s/.*/nfvo.rabbit.brokerIp = ${ip}/" ${OPENBATON_NFVO_DIR}/main/src/main/resources/application.properties
 
     $_ex 'rm -rf '"${OPENBATON_BASE_CONFIG_DIR}; mkdir -p ${OPENBATON_BASE_CONFIG_DIR}"
     $_ex 'chown -R '"${USER}:${USER} ${OPENBATON_BASE_CONFIG_DIR}"
     $_ex 'cp '"${OPENBATON_NFVO_DIR}/main/src/main/resources/application.properties ${OPENBATON_BASE_CONFIG_DIR}/${OPENBATON_NFVO_CONFIG_FILE}"
+    echo "  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ "
+    echo cat $(cat ${OPENBATON_BASE_CONFIG_DIR}/${OPENBATON_NFVO_CONFIG_FILE})
+    echo "  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ "
+    sleep 3 
     $_ex 'cp '"${OPENBATON_NFVO_DIR}/etc/keystore.p12 ${OPENBATON_BASE_CONFIG_DIR}/keystore.p12"
     mkdir -p ${OPENBATON_PLUGINS_VIMDRIVERS_DIR}
 }
