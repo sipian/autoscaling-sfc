@@ -1,6 +1,6 @@
 {  
    "name":"test",
-   "authUrl":"192.168.136.83/identity/v2.0",
+   "authUrl":"http://192.168.136.83/identity/v2.0/",
    "tenant":"admin",
    "username":"admin",
    "password":"secret",
