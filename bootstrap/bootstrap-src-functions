@@ -294,12 +294,23 @@ src_checkout_nfvo () {
     fi
 
     echo " * Downloading Open Baton NFVO .."
-    git clone --recursive "${OPENBATON_NFVO_REPO_URL}" "${OPENBATON_NFVO_DIR}"    
-    cd "${OPENBATON_NFVO_DIR}"
-
-    mv ./dashboard ../
-    git checkout ${nfvo_version}
-    mv ../dashboard ./dashboard
+    
+    echo "Type 1 for mah88 , 2 for openbaton/nfvo.git , followed by [ENTER]:"
+    read choice
+    
+    if [ "$choice" = "1" ]; then
+        echo "cloning https://github.com/mah88/nfvo"
+	git clone --recursive https://github.com/mah88/nfvo "${OPENBATON_NFVO_DIR}"    
+        cd "${OPENBATON_NFVO_DIR}"
+    else
+        echo "cloning https://github.com/openbaton/nfvo"
+    	git clone --recursive "${OPENBATON_NFVO_REPO_URL}" "${OPENBATON_NFVO_DIR}"    
+    	cd "${OPENBATON_NFVO_DIR}"
+    	mv ./dashboard ../
+    	git checkout ${nfvo_version}
+    	mv ../dashboard ./dashboard
+    fi
+    
     git submodule init
     git submodule update
     
