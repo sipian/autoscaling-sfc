@@ -300,9 +300,6 @@ src_checkout_nfvo () {
     mv ./dashboard ../
     git checkout ${nfvo_version}
     mv ../dashboard ./dashboard
-    cd dashboard
-    git checkout 3.2.0
-    cd ../
     git submodule init
     git submodule update
 
