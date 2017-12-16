@@ -33,6 +33,7 @@ _openbaton_base="${_base}/openbaton"
 _openbaton_conf="/etc/openbaton"
 _openbaton_log="/var/log/openbaton"
 _nfvo="${_openbaton_base}/nfvo"
+_dashboard="${_openbaton_base}/dashboard"
 _nfvo_vim_drivers="${_nfvo}/plugins/vim-drivers"
 _generic_vnfm="${_openbaton_base}/generic-vnfm"
 
@@ -133,16 +134,17 @@ src_checkout_nfvo () {
     echo "Getting OpenBaton..."
     src_create_openbaton_base
     src_create_openbaton_log
-    git clone --recursive "${_openbaton_base_repo}" "${_nfvo}"
+    git clone "${_openbaton_base_repo}" "${_nfvo}"
+    git clone https://github.com/openbaton/dashboard.git "${_dashboard}"
+
     cd "${_nfvo}"
-    mv ./dashboard ../
-    cd ../dashboard
-    git checkout tags/3.0.0
-    cd ../nfvo
     git checkout tags/3.0.1
-    cd ../
-    mv ./dashboard/ nfvo/
-    cd ./nfvo
+
+    cd "${_dashboard}"
+    git checkout tags/3.0.0
+
+    mv "${_dashboard}" "${_nfvo}"
+    
     $_ex 'rm -rf '"${_openbaton_conf}; mkdir -p ${_openbaton_conf}"
     $_ex 'cp '"${_nfvo}/etc/openbaton.properties ${_openbaton_conf}/openbaton.properties"
     $_ex 'cp '"${_nfvo}/etc/keystore.p12 ${_openbaton_conf}/keystore.p12"
