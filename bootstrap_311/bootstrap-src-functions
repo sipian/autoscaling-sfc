@@ -137,7 +137,7 @@ src_checkout_nfvo () {
     git clone "${_openbaton_base_repo}" "${_nfvo}"
 
     cd "${_nfvo}"
-    rm ./dashboard
+    rm -rf ./dashboard/
     git checkout tags/3.0.1
 
     $_ex 'rm -rf '"${_openbaton_conf}; mkdir -p ${_openbaton_conf}"
