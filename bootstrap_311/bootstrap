@@ -8,6 +8,11 @@
 #### Usage ####
 ###############
 
+x=$(cat /etc/hostname)
+sudo sed -i "1s/.*/127.0.0.1 localhost $x/" /etc/hosts
+echo "changing hostname --> $x"
+
+
 usage () {
     echo "Usage:"
     echo "./bootstrap [release | nightly | develop]                                            (if the script is already locally available)"
