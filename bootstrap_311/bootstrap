@@ -248,7 +248,6 @@ prerequiste () {
     sudo sed -i "s_DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm_DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm_g" /etc/apache2/mods-enabled/dir.conf
 
     sudo systemctl restart apache2
-    sudo systemctl status apache2
 
     echo "installing zabbix server"
     sudo apt-get install -y php7.0-xml php7.0-bcmath php7.0-mbstring
@@ -269,7 +268,6 @@ prerequiste () {
 
     sudo systemctl restart apache2
     sudo systemctl start zabbix-server
-    sudo systemctl enable zabbix-server
     sudo systemctl status zabbix-server
     cd $HOME
 
