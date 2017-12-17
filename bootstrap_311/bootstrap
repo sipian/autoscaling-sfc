@@ -268,7 +268,7 @@ prerequiste () {
 
     sudo systemctl restart apache2
     sudo systemctl start zabbix-server
-    sudo systemctl status zabbix-server
+    sudo systemctl enable zabbix-server
     cd $HOME
 
 }
