@@ -36,6 +36,7 @@ _nfvo="${_openbaton_base}/nfvo"
 _dashboard="${_openbaton_base}/dashboard"
 _nfvo_vim_drivers="${_nfvo}/plugins/vim-drivers"
 _generic_vnfm="${_openbaton_base}/generic-vnfm"
+_zabbix_plugin="${_openbaton_base}/zabbix_plugin"
 
 _installer_folder="${_base}/tmp"
 _logfile="${_installer_folder}/log"
@@ -254,6 +255,23 @@ src_deploy_additional_component () {
 }
 
 
+src_zabbix_plugin() {
+    echo "starting installation of zabbix-plugin"
+    sudo apt install -y git gradle
+    git clone https://github.com/openbaton/zabbix-plugin.git ${_zabbix_plugin}
+    git checkout 3.1.0
+    cd ${_zabbix_plugin}
+    ./gradlew build
+    echo "check the status of zabbix plugin"
+    $_ex 'mkdir -p /etc/openbaton/plugins/monitoring'
+    $_ex 'cp src/main/resources/plugin.conf.properties /etc/openbaton/plugins/monitoring/zabbix-plugin.conf'
+    $_ex 'sed -i "s_user-zbx=admin_user-zbx=Admin_g" /etc/openbaton/plugins/monitoring/zabbix-plugin.conf'
+    echo "running jar command"
+    java -jar build/lib/*.jar
+    sleep 7
+}
+
+
 ##############
 #### Main ####
 ##############
@@ -274,6 +292,9 @@ src_bootstrap () {
     # configure the Open Baton security 
     configure_security "openbaton.properties"
     # deploy and compile OpenBaton orchestrator
+    
+    src_zabbix_plugin
+
     src_deploy_nfvo
     #src_delete_openbaton_password
 
