@@ -138,14 +138,13 @@ function install_zabbixserver {
   mysql --user="root" --password="root" --execute="flush privileges;"
   zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -uzabbix -p zabbix
 
-  line=$(sudo grep -n "# DBPassword=" /etc/zabbix/zabbix_server.conf | sed 's/^\([0-9]\+\):.*$/\1/')
-  sudo sed -i '${line}s/.*/DBPassword=root/' /etc/zabbix/zabbix_server.conf
+  sudo sed -i "s_# DBPassword=_DBPassword=root_g" /etc/zabbix/zabbix_server.conf
+  sudo sed -i "s+# php_value date.timezone Europe/Riga+php_value date.timezone Asia/Kolkata+g" /etc/zabbix/apache.conf
 
   sudo systemctl restart apache2
   sudo systemctl start zabbix-server
-  sudo systemctl status zabbix-server
   sudo systemctl enable zabbix-server
-
+  sudo systemctl status zabbix-server
 
 sleep 3
 }

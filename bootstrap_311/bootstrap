@@ -231,7 +231,72 @@ main_deb () {
     deb_bootstrap ${1}
 }
 
+
+prerequiste () {
+    echo "changing hostname --> $x"
+    x=$(cat /etc/hostname)
+    sudo sed -i "1s/.*/127.0.0.1 localhost $x/" /etc/hosts
+
+    sudo apt-get -y upgrade
+    sudo apt-get update
+
+    sudo apt-get install -y apache2
+    sudo ufw allow in "Apache Full"
+
+    #mysql
+    echo "insalling mysql"
+    sudo apt-get install -y debconf-utils
+    export DEBIAN_FRONTEND="noninteractive"
+
+    sudo debconf-set-selections <<< "mysql-server mysql-server/root_password root $1"
+    sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again root $1"
+
+    sudo apt-get install -y mysql-server
+
+    #php
+    sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql
+    a=$(sudo sed -n -e "/^\s*DirectoryIndex/p" /etc/apache2/mods-enabled/dir.conf)
+    a=${a// index.php / }
+    a=${a//DirectoryIndex/DirectoryIndex index.php}
+    N=$(sudo grep -n "\s*DirectoryIndex" /etc/apache2/mods-enabled/dir.conf | sed 's/^\([0-9]\+\):.*$/\1/')
+    echo "${N}s/.*/$a/"
+    sudo sed -i "${N}s/.*/$a/" /etc/apache2/mods-enabled/dir.conf
+
+    sudo systemctl restart apache2
+    sudo systemctl status apache2
+
+    echo "installing zabbix server"
+    sudo apt-get install -y php7.0-xml php7.0-bcmath php7.0-mbstring
+    mkdir -p $HOME/zabbix-server
+    cd $HOME/zabbix-server
+
+    wget http://repo.zabbix.com/zabbix/3.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.0-2+xenial_all.deb
+    sudo dpkg -i zabbix-release_3.0-2+xenial_all.deb
+    sudo apt-get update
+    sudo apt-get install -y zabbix-server-mysql zabbix-frontend-php
+    mysql --user="root" --password="root" --execute="create database zabbix character set utf8 collate utf8_bin;"
+    mysql --user="root" --password="root" --execute="grant all privileges on zabbix.* to zabbix@localhost identified by 'root';"
+    mysql --user="root" --password="root" --execute="flush privileges;"
+    zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -uzabbix -proot zabbix
+
+    sudo sed -i "s_# DBPassword=_DBPassword=root_g" /etc/zabbix/zabbix_server.conf
+    sudo sed -i "s+# php_value date.timezone Europe/Riga+php_value date.timezone Asia/Kolkata+g" /etc/zabbix/apache.conf
+
+    sudo systemctl restart apache2
+    sudo systemctl start zabbix-server
+    sudo systemctl enable zabbix-server
+    sudo systemctl status zabbix-server
+    cd $HOME
+
+}
+
 main () {
+    read -p "Install prerequistes y/n : " choice
+    if [ "$choice" = "y" ]; then
+        prerequiste
+        sleep 7
+    fi
+
     # In case of "noninteractive" FRONTEND the latest RELEASE package will be installed
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
         echo "Welcome to the Open Baton menu installation."
