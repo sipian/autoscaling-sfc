@@ -260,7 +260,7 @@ src_zabbix_plugin() {
     sudo apt install -y git gradle
     git clone https://github.com/openbaton/zabbix-plugin.git ${_zabbix_plugin}
     cd ${_zabbix_plugin}
-    git checkout tags/3.1.0
+    git checkout tags/3.2.2
     ./gradlew build
     echo "check the status of zabbix plugin"
     $_ex 'mkdir -p /etc/openbaton/plugins/monitoring'
@@ -292,7 +292,6 @@ src_bootstrap () {
     configure_security "openbaton.properties"
     # deploy and compile OpenBaton orchestrator
     
-    src_zabbix_plugin
 
     src_deploy_nfvo
     #src_delete_openbaton_password
@@ -301,6 +300,7 @@ src_bootstrap () {
     src_checkout_additional_component "${_openbaton_generic_vnfm_repo}" "generic-vnfm" "Generic VNFM" "src/main/resources/application.properties" "openbaton-vnfm-generic.properties" true "tags/3.0.0"
     # deploy and compile the Generic VNFM
     if [ "${installed}" = "0" ]; then src_deploy_additional_component "generic-vnfm" "Generic VNFM" ; fi
+    src_zabbix_plugin
 
     # # checkout the Fault Management System
     # src_checkout_additional_component "${_openbaton_fmsystem_repo}" "fm-system" "Fault Management System (FMS)" "etc/fms.properties" "openbaton-fms.properties" false
