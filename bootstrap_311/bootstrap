@@ -100,7 +100,7 @@ configure_security () {
 
     # In case of "noninteractive" FRONTEND the default value will remain valid (see in lines below)
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
-        read -p "Do you want to enable HTTPS? [N/y]: " https
+        https="N"
         export https=${https}
         if [ "${https}" != "" ]; then
             if [ "${https}" = "y" -o "${https}" = "Y" -o "${https}" = "yes" ]; then
@@ -166,7 +166,7 @@ configure_mysql () {
     # In case of "noninteractive" FRONTEND the default value will remain valid (sqluser: admin ; sqlpassword: changeme)
     # Redundant check since the 'configure_mysql' function is executed only when 'DEBIAN_FRONTEND != noninteractive'
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
-        read -p "Please, type the name of the mysql user you would like Open Baton to use [admin]: " sqluser
+        sqluser="admin"
         export dbuser=admin
         export dbpassword=changeme
         if [ "${sqluser}" != "" ]; then
@@ -175,7 +175,7 @@ configure_mysql () {
         fi
         # Turning echo on and off between password reading
         stty -echo
-        read -p "Please, provide the password for this user [changeme]: " sqlpassword ; echo
+        rsqlpassword="root" ; echo
         stty echo
         if [ "${sqlpassword}" != "" ]; then
             dbpassword=${sqlpassword}
@@ -183,7 +183,7 @@ configure_mysql () {
         fi                                                                                                                                                
         # Turning echo on and off between password reading          
         stty -echo
-        read -p "Please, provide the password of the 'root' user of mysql [root]: " rootpasswd ; echo
+        rootpasswd="root" ; echo
         stty echo
         if [ "${rootpasswd}" = "" ]; then
             rootpasswd=root
@@ -202,7 +202,7 @@ install_mysql () {
 
     # In case of "noninteractive" FRONTEND the default value will remain valid (sqluser: admin ; sqlpassword: changeme)
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
-        read -p "Do you want to enable the persistence through MySQL? [Y/n]: " mysql
+        mysql="Y"
         if [ "${mysql}" = "" -o "${mysql}" = "y" -o "${mysql}" = "Y" -o "${mysql}" = "yes" ]; then
             echo " * [INFO] Enabling MySQL Persistence"
             $_ex 'apt-get update'
@@ -239,7 +239,7 @@ main () {
         echo "    1. develop (SOURCE): it will be downloaded the source code for all the components which will be executed in screens"
         echo "    2. release (DEBIAN): it will be installed the binary version of the latest released version"
         echo "    3. nightly (DEBIAN): it will be installed the binary version of the latest nightly build"
-        read -p "Select the Open Baton installation type you prefer [2]: " install_type
+        install_type=1
         case ${install_type} in
             1 ) 
                 main_src ;;

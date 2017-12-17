@@ -64,13 +64,13 @@ src_install_message_queue () {
 }
 
 src_configure_message_queue () {
-  read -p "Enter the rabbitmq broker ip [localhost]: " brokerIp
+  brokerIp="$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)"
   export brokerIp=${brokerIp}
   if [ "${brokerIp}" != "" ]; then
       $_ex 'sed -i "s/nfvo.rabbit.brokerIp=localhost/nfvo.rabbit.brokerIp=${brokerIp}/g" /etc/openbaton/openbaton.properties'
   fi
 
-  read -p "Enter the rabbitmq management port [15672]: " managementPort
+  managementPort=15672
   export managementPort=${managementPort}
   if [ "${managementPort}" != "" ]; then
     $_ex 'sed -i "s/nfvo.rabbit.management.port=15672/nfvo.rabbit.management.port=${managementPort}/g" /etc/openbaton/openbaton.properties'
@@ -96,7 +96,7 @@ src_download_plugins () {
 
 src_prereq () {
     # TODO differentiate between fedora, OS X, ubuntu..
-    $_ex 'add-apt-repository -y ppa:openjdk-r/ppa ; apt-get update; apt-get -y install openjdk-7-jdk curl wget screen git'
+    $_ex 'add-apt-repository -y ppa:openjdk-r/ppa ; apt-get update; apt-get -y install openjdk-8-jdk curl wget screen git'
     fix_java_security
 }
 
@@ -177,12 +177,12 @@ src_set_openbaton_password () {
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
         # Turning echo on and off between password reading
         stty -echo
-        read -p "Provide the new password for 'admin' user of Open Baton: " openbatonpswd ; echo
+        openbatonpswd="openbaton" ; echo
         stty echo
         if [ "${openbatonpswd}" != "" ]; then
             export openbatonpswd=${openbatonpswd}
             stty -echo
-            read -p "Repeat the password: " openbatonpswd2 ; echo
+            openbatonpswd2="openbaton" ; echo
             stty echo
             export openbatonpswd2=${openbatonpswd2}
             if [ "${openbatonpswd}" = "${openbatonpswd2}" ]; then
@@ -210,7 +210,7 @@ src_checkout_additional_component () {
 
     if [ "${DEBIAN_FRONTEND}" != "Noninteractive" -a "${DEBIAN_FRONTEND}" != "noninteractive" ]; then
         # Ask for the specified Additional Component installation
-        read -p "Do you want to install also the ${component_name_fancy}? (if you do not, then you can still install it later with 'cd ${_openbaton_base} && git clone ${component_repo_url}') (Y/n): " ac
+        ac="Y"
 
         if [ "${ac}" = "" -o "${ac}" = "y" -o "${ac}" = "Y" ]; then
             cd "${_openbaton_base}"
