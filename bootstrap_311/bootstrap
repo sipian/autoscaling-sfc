@@ -175,7 +175,7 @@ configure_mysql () {
         fi
         # Turning echo on and off between password reading
         stty -echo
-        rsqlpassword="root" ; echo
+        sqlpassword="root" ; echo
         stty echo
         if [ "${sqlpassword}" != "" ]; then
             dbpassword=${sqlpassword}
