@@ -259,16 +259,15 @@ src_zabbix_plugin() {
     echo "starting installation of zabbix-plugin"
     sudo apt install -y git gradle
     git clone https://github.com/openbaton/zabbix-plugin.git ${_zabbix_plugin}
-    git checkout 3.1.0
+    git checkout tags/3.1.0
     cd ${_zabbix_plugin}
-    ./gradlew build
+    ./gradlew clean build -x test
     echo "check the status of zabbix plugin"
     $_ex 'mkdir -p /etc/openbaton/plugins/monitoring'
     $_ex 'cp src/main/resources/plugin.conf.properties /etc/openbaton/plugins/monitoring/zabbix-plugin.conf'
     $_ex 'sed -i "s_user-zbx=admin_user-zbx=Admin_g" /etc/openbaton/plugins/monitoring/zabbix-plugin.conf'
     echo "running jar command"
-    java -jar build/lib/*.jar
-    sleep 7
+    # java -jar build/lib/*.jar
 }
 
 
