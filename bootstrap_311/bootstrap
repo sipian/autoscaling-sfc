@@ -245,12 +245,8 @@ prerequiste () {
 
     #php
     sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql
-    a=$(sudo sed -n -e "/^\s*DirectoryIndex/p" /etc/apache2/mods-enabled/dir.conf)
-    a=${a// index.php / }
-    a=${a//DirectoryIndex/DirectoryIndex index.php}
-    N=$(sudo grep -n "\s*DirectoryIndex" /etc/apache2/mods-enabled/dir.conf | sed 's/^\([0-9]\+\):.*$/\1/')
-    echo "${N}s/.*/$a/"
-    sudo sed -i "${N}s/.*/$a/" /etc/apache2/mods-enabled/dir.conf
+
+    sudo sed -i "s_DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm_DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm_g" /etc/apache2/mods-enabled/dir.conf
 
     sudo systemctl restart apache2
     sudo systemctl status apache2
