@@ -12,6 +12,7 @@ sudo ufw allow in "Apache Full"
 
 #mysql
 echo "insalling mysql : give password as root"
+sleep 5
 sudo apt-get install -y mysql-server
 
 #php
