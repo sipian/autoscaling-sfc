@@ -269,6 +269,8 @@ prerequiste () {
     sudo systemctl restart apache2
     sudo systemctl start zabbix-server
     sudo systemctl enable zabbix-server
+    sudo systemctl status zabbix-server
+
     cd $HOME/autoscaling-sfc/bootstrap_311
 
 }
