@@ -4,6 +4,9 @@ x=$(cat /etc/hostname)
 echo "changing hostname --> $x"
 sudo sed -i "1s/.*/127.0.0.1 localhost $x/" /etc/hosts
 
+echo "insalling mysql : give root password as root"
+sleep 5
+
 sudo apt-get -y upgrade
 sudo apt-get update
 
@@ -11,8 +14,6 @@ sudo apt-get install -y apache2 gradle git
 sudo ufw allow in "Apache Full"
 
 #mysql
-echo "insalling mysql : give password as root"
-sleep 5
 sudo apt-get install -y mysql-server
 
 #php
@@ -34,6 +35,7 @@ sudo apt-get install -y zabbix-server-mysql zabbix-frontend-php
 mysql --user="root" --password="root" --execute="create database zabbix character set utf8 collate utf8_bin;"
 mysql --user="root" --password="root" --execute="grant all privileges on zabbix.* to zabbix@localhost identified by 'root';"
 mysql --user="root" --password="root" --execute="flush privileges;"
+echo "insert password - root"
 zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -uzabbix -proot zabbix
 
 sudo sed -i "s_# DBPassword=_DBPassword=root_g" /etc/zabbix/zabbix_server.conf
