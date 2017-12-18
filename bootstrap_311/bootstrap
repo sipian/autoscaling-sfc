@@ -235,7 +235,7 @@ prerequiste () {
     sudo apt-get -y upgrade
     sudo apt-get update
 
-    sudo apt-get install -y apache2
+    sudo apt-get install -y apache2 gradle git
     sudo ufw allow in "Apache Full"
 
     #mysql
@@ -279,7 +279,7 @@ main () {
     read -p "Install prerequistes y/n : " choice
     if [ "$choice" = "y" ]; then
         prerequiste
-        sleep 7
+        exit
     fi
 
     # In case of "noninteractive" FRONTEND the latest RELEASE package will be installed
