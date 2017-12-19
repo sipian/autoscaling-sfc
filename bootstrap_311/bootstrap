@@ -279,7 +279,6 @@ main () {
     read -p "Install prerequistes y/n : " choice
     if [ "$choice" = "y" ]; then
         prerequiste
-        exit
     fi
 
     # In case of "noninteractive" FRONTEND the latest RELEASE package will be installed
