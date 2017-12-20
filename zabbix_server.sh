@@ -9,7 +9,7 @@ echo "installing mysql : root password as root"
 sudo apt-get -y upgrade
 sudo apt-get update
 
-sudo apt-get install -y apache2 gradle git
+sudo apt-get install -y apache2 git
 sudo ufw allow in "Apache Full"
 
 #mysql
