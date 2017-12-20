@@ -1,0 +1,206 @@
+{
+  "name": "NSD iperf + privateIPs",
+  "vendor": "FOKUS",
+  "version": "1.0",
+  "vld": [
+    {
+      "name": "private"
+    }
+  ],
+  "vnfd": [
+    {
+      "vendor": "FOKUS",
+      "version": "1.0",
+      "name": "iperf-client",
+      "type": "client",
+      "endpoint": "generic",
+      "configurations": {
+        "name": "config_name",
+        "configurationParameters": [
+          {
+            "confKey": "zabbixserverip",
+            "value": "10.0.0.5"
+          }
+        ]
+      },
+      "lifecycle_event": [
+        {
+          "event": "CONFIGURE",
+          "lifecycle_events": [
+            "server_configure.sh"
+          ]
+        },
+        {
+          "event": "INSTANTIATE",
+          "lifecycle_events": [
+            "install.sh"
+          ]
+        },
+        {
+          "event": "START",
+          "lifecycle_events": [
+            "update_zabbix_agent.sh"
+          ]
+        }
+      ],
+      "virtual_link": [
+        {
+          "name": "private"
+        }
+      ],
+      "deployment_flavour": [
+        {
+          "flavour_key": "m1.small"
+        }
+      ],
+      "vnfPackageLocation": "https://github.com/sipian/vnf-scripts.git",
+      "vdu": [
+        {
+          "vm_image": [
+            "ubuntu16"
+          ],
+          "scale_in_out": 1,
+          "vnfc": [
+            {
+              "connection_point": [
+                {
+                  "virtual_link_reference": "private",
+                  "interfaceId": 0
+                }
+              ]
+            }
+          ],
+          "vimInstanceName": [
+            "test"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "iperf-server",
+      "vendor": "FOKUS",
+      "version": "1.0",
+      "configurations": {
+        "name": "config_name",
+        "configurationParameters": [
+          {
+            "confKey": "zabbixserverip",
+            "value": "10.0.0.5"
+          }
+        ]
+      },
+      "lifecycle_event": [
+        {
+          "event": "INSTANTIATE",
+          "lifecycle_events": [
+            "install.sh",
+            "install-srv.sh"
+          ]
+        },
+        {
+          "event": "START",
+          "lifecycle_events": [
+            "update_zabbix_agent.sh"
+          ]
+        }
+      ],
+      "virtual_link": [
+        {
+          "name": "private"
+        }
+      ],
+      "vdu": [
+        {
+          "vm_image": [
+            "ubuntu16"
+          ],
+          "scale_in_out": 40,
+          "vnfc": [
+            {
+              "connection_point": [
+                {
+                  "virtual_link_reference": "private",
+                  "interfaceId": 0
+                }
+              ]
+            }
+          ],
+          "vimInstanceName": [
+            "test"
+          ]
+        }
+      ],
+      "deployment_flavour": [
+        {
+          "flavour_key": "m1.small"
+        }
+      ],
+      "type": "server",
+      "endpoint": "generic",
+      "vnfPackageLocation": "https://github.com/sipian/vnf-scripts.git",
+      "auto_scale_policy": [
+        {
+          "name": "scale-out",
+          "threshold": 1,
+          "period": 5,
+          "cooldown": 8,
+          "comparisonOperator": ">=",
+          "mode": "REACTIVE",
+          "type": "WEIGHTED",
+          "alarms": [
+            {
+              "metric": "system.cpu.load[percpu,avg1]",
+              "statistic": "avg",
+              "comparisonOperator": ">",
+              "threshold": 2.25,
+              "weight": 1
+            }
+          ],
+          "actions": [
+            {
+              "type": "SCALE_OUT",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "name": "scale-in",
+          "threshold": 1,
+          "period": 5,
+          "cooldown": 8,
+          "comparisonOperator": ">=",
+          "mode": "REACTIVE",
+          "type": "WEIGHTED",
+          "alarms": [
+            {
+              "metric": "system.cpu.load[percpu,avg1]",
+              "statistic": "avg",
+              "comparisonOperator": "<",
+              "threshold": 1.0,
+              "weight": 1
+            }
+          ],
+          "actions": [
+            {
+              "type": "SCALE_IN",
+              "value": "1"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "vnf_dependency": [
+    {
+      "source": {
+        "name": "iperf-server"
+      },
+      "target": {
+        "name": "iperf-client"
+      },
+      "parameters": [
+        "private"
+      ]
+    }
+  ]
+}
