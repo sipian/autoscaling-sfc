@@ -4,8 +4,7 @@ x=$(cat /etc/hostname)
 echo "changing hostname --> $x"
 sudo sed -i "1s/.*/127.0.0.1 localhost $x/" /etc/hosts
 
-echo "insalling mysql : give root password as root"
-sleep 5
+echo "installing mysql : root password as root"
 
 sudo apt-get -y upgrade
 sudo apt-get update
@@ -14,7 +13,13 @@ sudo apt-get install -y apache2 gradle git
 sudo ufw allow in "Apache Full"
 
 #mysql
-sudo apt-get install -y mysql-server
+sudo apt -y install zsh htop    
+    
+echo "insalling mysql : give password as root"
+echo "mysql-server-5.7 mysql-server/root_password password root" | sudo debconf-set-selections
+echo "mysql-server-5.7 mysql-server/root_password_again password root" | sudo debconf-set-selections    
+
+sudo apt-get install -y mysql-server-5.7
 
 #php
 sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql
