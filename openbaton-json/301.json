@@ -1,22 +1,21 @@
 {
-  "name": "NSD iperf + privateIPs",
-  "vendor": "FOKUS",
-  "version": "1.0",
+  "name": "sample-NS",
+  "vendor": "Franhofer FOKUS",
+  "version": "1.1.0",
   "vnfd": [
     {
-      "vendor": "FOKUS",
-      "version": "1.0",
-      "name": "server",
+      "vendor": "Franhofer FOKUS",
+      "version": "1.1.0",
+      "name": "TheServer",
       "type": "server",
-      "endpoint": "generic",
-      "configurations": {},
+      "endpoint": "dummy",
       "vdu": [
         {
           "vm_image": [
             "ubuntu"
           ],
           "vimInstanceName": [
-            "test"
+            "vim-instance"
           ],
           "scale_in_out": 1,
           "vnfc": [
@@ -40,7 +39,7 @@
           "event": "INSTANTIATE",
           "lifecycle_events": [
             "install.sh",
-            "install-srv.sh"
+            "start-srv.sh"
           ]
         }
       ],
@@ -49,28 +48,35 @@
           "flavour_key": "m1.small"
         }
       ],
-      "vnfPackageLocation": "https://github.com/openbaton/vnf-scripts.git"
+      "vnfPackageLocation": "https://localhost/repo.git"
     },
     {
-      "vendor": "FOKUS",
-      "version": "1.0",
-      "name": "client",
+      "vendor": "Fraunhofer FOKUS",
+      "version": "1.1.0",
+      "name": "TheClient",
       "type": "client",
-      "endpoint": "generic",
-      "configurations": {},      
+      "endpoint": "dummy",
       "vdu": [
         {
           "vm_image": [
             "ubuntu"
           ],
           "vimInstanceName": [
-            "test"
           ],
-          "scale_in_out": 1,
+          "scale_in_out": 2,
           "vnfc": [
             {
               "connection_point": [
                 {
+                  "floatingIp": "random",
+                  "virtual_link_reference": "private"
+                }
+              ]
+            },
+            {
+              "connection_point": [
+                {
+                  "floatingIp": "random",
                   "virtual_link_reference": "private"
                 }
               ]
@@ -93,7 +99,7 @@
         {
           "event": "CONFIGURE",
           "lifecycle_events": [
-            "server_configure.sh"
+            "server_start-clt.sh"
           ]
         }
       ],
@@ -102,11 +108,11 @@
           "flavour_key": "m1.small"
         }
       ],
-      "vnfPackageLocation": "https://github.com/openbaton/vnf-scripts.git"
+      "vnfPackageLocation": "https://localhost/repo.git"
     }
   ],
   "vnffgd": [
-  ],  
+  ],
   "vld": [
     {
       "name": "private"

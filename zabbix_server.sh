@@ -5,7 +5,7 @@ echo "changing hostname --> $x"
 sudo sed -i "1s/.*/127.0.0.1 localhost $x/" /etc/hosts
 
 echo "insalling mysql : give root password as root"
-sleep 5
+sleep 3
 
 sudo apt-get -y upgrade
 sudo apt-get update
