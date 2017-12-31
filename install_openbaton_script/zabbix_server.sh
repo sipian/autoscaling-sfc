@@ -50,4 +50,3 @@ sudo sed -i "s+# php_value date.timezone Europe/Riga+php_value date.timezone Asi
 sudo systemctl restart apache2
 sudo systemctl start zabbix-server
 sudo systemctl enable zabbix-server
-@&^#
