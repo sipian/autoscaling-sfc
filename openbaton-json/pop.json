@@ -4,7 +4,7 @@
    "tenant":"admin",
    "username":"admin",
    "password":"secret",
-   "keyPair":"openbatonkeypair",
+   "keyPair":"finalopenbaton",
    "securityGroups":[  
       "default"
    ],
