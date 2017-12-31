@@ -8,14 +8,27 @@
       "version": "1.1.0",
       "name": "TheServer",
       "type": "server",
-      "endpoint": "dummy",
+      "endpoint": "generic",
+      "configurations": {
+        "name": "config_name",
+        "configurationParameters": [
+          {
+            "confKey": "key1",
+            "value": "value1"
+          },
+          {
+            "confKey": "key2",
+            "value": "value2"
+          }
+        ]
+      },
       "vdu": [
         {
           "vm_image": [
             "ubuntu"
           ],
           "vimInstanceName": [
-            "vim-instance"
+            "test"
           ],
           "scale_in_out": 1,
           "vnfc": [
@@ -39,7 +52,7 @@
           "event": "INSTANTIATE",
           "lifecycle_events": [
             "install.sh",
-            "start-srv.sh"
+            "install-srv.sh"
           ]
         }
       ],
@@ -48,18 +61,18 @@
           "flavour_key": "m1.small"
         }
       ],
-      "vnfPackageLocation": "https://localhost/repo.git"
+      "vnfPackageLocation": "https://github.com/openbaton/vnf-scripts.git"
     },
     {
       "vendor": "Fraunhofer FOKUS",
       "version": "1.1.0",
       "name": "TheClient",
       "type": "client",
-      "endpoint": "dummy",
+      "endpoint": "generic",
       "vdu": [
         {
           "vm_image": [
-            "ubuntu"
+            "ubuntu1"
           ],
           "vimInstanceName": [
           ],
@@ -99,7 +112,7 @@
         {
           "event": "CONFIGURE",
           "lifecycle_events": [
-            "server_start-clt.sh"
+            "server_configure.sh"
           ]
         }
       ],
@@ -108,7 +121,7 @@
           "flavour_key": "m1.small"
         }
       ],
-      "vnfPackageLocation": "https://localhost/repo.git"
+      "vnfPackageLocation": "https://github.com/openbaton/vnf-scripts.git"
     }
   ],
   "vnffgd": [
@@ -121,10 +134,10 @@
   "vnf_dependency": [
     {
       "source": {
-        "name": "server"
+        "name": "TheServer"
       },
       "target": {
-        "name": "client"
+        "name": "TheClient"
       },
       "parameters": [
         "private"
