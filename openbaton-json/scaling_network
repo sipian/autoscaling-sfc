@@ -1,0 +1,168 @@
+{
+  "name": "NSD 1  ",
+  "vendor": "FOKUS",
+  "version": "1.0",
+
+  "vnfd": [
+    {
+      "vendor": "FOKUS",
+      "version": "1.0",
+      "name": "server",
+      "type": "server",
+      "endpoint": "generic",
+
+"configurations": {
+        "name": "config_name",
+        "configurationParameters": [{
+          "confKey": "zabbixserverip",
+          "value": "10.0.0.8"
+        }]
+      },      "vdu": [
+        {
+          "vm_image": [
+            "ubuntu"
+          ],
+          "vimInstanceName": [
+            "test"
+          ],
+          "scale_in_out": 10,
+          "vnfc": [
+            {
+              "connection_point": [
+                {
+                  "virtual_link_reference": "private"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "virtual_link": [
+        {
+          "name": "private"
+        }
+      ],
+      "lifecycle_event": [
+        {
+          "event": "INSTANTIATE",
+          "lifecycle_events": [
+            "install.sh",
+            "install-srv.sh",
+            "update_zabbix_agent.sh"
+          ]
+        }
+      ],
+      "deployment_flavour": [
+        {
+          "flavour_key": "m1.small"
+        }
+      ],
+      "vnfPackageLocation": "https://github.com/sipian/vnf-scripts.git",
+      "auto_scale_policy": [
+        {
+          "name": "scale-out",
+          "threshold": 100,
+          "period": 30,
+          "cooldown": 60,
+          "comparisonOperator": ">=",
+          "mode": "REACTIVE",
+          "type": "WEIGHTED",
+          "alarms": [
+            {
+              "metric": "net.if.in[ens3, bytes]",
+              "statistic": "max",
+              "comparisonOperator": ">",
+              "threshold": 200000,
+              "weight": 1
+            }
+          ],
+          "actions": [
+            {
+              "type": "SCALE_OUT",
+              "value": "1"
+            }
+          ]
+        }]
+    },
+    {
+      "vendor": "FOKUS",
+      "version": "1.0",
+      "name": "client",
+      "type": "client",
+      "endpoint": "generic",
+"configurations": {
+        "name": "config_name",
+        "configurationParameters": [{
+          "confKey": "zabbixserverip",
+          "value": "10.0.0.8"
+        }]
+      },      "vdu": [
+        {
+          "vm_image": [
+            "ubuntu"
+          ],
+          "vimInstanceName": [
+            "test"
+          ],
+          "scale_in_out": 1,
+
+          "vnfc": [
+            {
+              "connection_point": [
+                {
+                  "virtual_link_reference": "private"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "virtual_link": [
+        {
+          "name": "private"
+        }
+      ],
+      "lifecycle_event": [
+        {
+          "event": "INSTANTIATE",
+          "lifecycle_events": [
+            "install.sh",
+            "update_zabbix_agent.sh"
+          ]
+        },
+        {
+          "event": "CONFIGURE",
+          "lifecycle_events": [
+            "server_configure.sh"
+          ]
+        }
+      ],
+      "deployment_flavour": [
+        {
+          "flavour_key": "m1.small"
+        }
+      ],
+      "vnfPackageLocation": "https://github.com/sipian/vnf-scripts.git"
+    }
+  ],
+  "vnffgd": [
+  ],  
+  "vld": [
+    {
+      "name": "private"
+    }
+  ],
+  "vnf_dependency": [
+    {
+      "source": {
+        "name": "server"
+      },
+      "target": {
+        "name": "client"
+      },
+      "parameters": [
+        "private"
+      ]
+    }
+  ]
+}
