@@ -53,6 +53,7 @@ src_install_message_queue () {
     echo "installing message queue.."
     $_ex 'apt-get install -y rabbitmq-server'
     ulimit -S -n 4096
+    export rabbitmq_admin_password="openbaton"
     $_ex 'rabbitmqctl add_user admin openbaton'
     $_ex 'rabbitmqctl set_user_tags admin administrator'
     $_ex 'rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"'
@@ -281,15 +282,19 @@ src_bootstrap () {
 
     # checkout OpenBaton
     src_checkout_nfvo
-    # moved message queue installation part
-    src_download_plugins
+    
+    # check if all the required libraries are available
+    src_check_environment
+
     # moved message queue installation and configuration part
     src_install_message_queue
     src_configure_message_queue
-    # check if all the required libraries are available
-    src_check_environment
     # configure the Open Baton security 
     configure_security "openbaton.properties"
+
+
+    # moved message queue installation part
+    src_download_plugins
     # deploy and compile OpenBaton orchestrator
     
 
