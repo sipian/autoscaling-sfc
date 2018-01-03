@@ -152,7 +152,7 @@
               "metric": "system.cpu.load[percpu,avg1]",
               "statistic": "avg",
               "comparisonOperator": ">",
-              "threshold": 2.25,
+              "threshold": 0.50,
               "weight": 1
             }
           ],
