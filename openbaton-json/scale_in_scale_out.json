@@ -57,7 +57,7 @@
       "vdu": [
         {
           "vm_image": [
-            "ubuntu16"
+            "ubuntu"
           ],
           "scale_in_out": 1,
           "vnfc": [
@@ -112,7 +112,7 @@
       "vdu": [
         {
           "vm_image": [
-            "ubuntu16"
+            "ubuntu"
           ],
           "scale_in_out": 40,
           "vnfc": [
