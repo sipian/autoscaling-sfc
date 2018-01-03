@@ -269,7 +269,7 @@ src_zabbix_plugin() {
     sudo apt install -y git gradle
     git clone https://github.com/openbaton/zabbix-plugin.git ${_zabbix_plugin}
     cd ${_zabbix_plugin}
-    git checkout tags/3.2.2
+    git checkout tags/3.2.0
     
 sudo echo "#!/bin/bash
 to=\$1
@@ -287,7 +287,6 @@ curl -X POST -H \"Accept: application/json\" -H \"Content-Type: application/json
     $_ex 'sudo cp build/libs/*.jar ${_nfvo_plugins}'
     $_ex 'sudo cp build/libs/*.jar ${_nfvo_vim_drivers}'
     
-    _nfvo_vim_drivers
     #echo "running jar command"
     #java -jar build/libs/*.jar
 }
