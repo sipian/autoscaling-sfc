@@ -329,7 +329,7 @@ src_bootstrap () {
     # if [ "${installed}" = "0" ]; then src_deploy_additional_component "fm-system" "Fault Management System (FMS)" ; fi
 
     # checkout the Auto Scaling Engine
-    src_checkout_additional_component "${_openbaton_asengine_repo}" "autoscaling-engine" "Auto Scaling Engine (ASE)" "etc/ase.properties" "openbaton-ase.properties" false "tags/1.2.2"
+    src_checkout_additional_component "${_openbaton_asengine_repo}" "autoscaling-engine" "Auto Scaling Engine (ASE)" "ase.properties" "openbaton-ase.properties" false "tags/1.2.2"
     # deploy and compile the Auto Scaling Engine
     if [ "${installed}" = "0" ]; then src_deploy_additional_component "autoscaling-engine" "Auto Scaling Engine (ASE)" ; fi
 
