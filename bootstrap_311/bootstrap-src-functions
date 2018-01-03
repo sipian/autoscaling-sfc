@@ -321,7 +321,7 @@ src_bootstrap () {
     src_checkout_additional_component "${_openbaton_generic_vnfm_repo}" "generic-vnfm" "Generic VNFM" "src/main/resources/application.properties" "openbaton-vnfm-generic.properties" true "tags/3.0.0"
     # deploy and compile the Generic VNFM
     if [ "${installed}" = "0" ]; then src_deploy_additional_component "generic-vnfm" "Generic VNFM" ; fi
-    #src_zabbix_plugin
+    src_zabbix_plugin
 
     # # checkout the Fault Management System
     # src_checkout_additional_component "${_openbaton_fmsystem_repo}" "fm-system" "Fault Management System (FMS)" "etc/fms.properties" "openbaton-fms.properties" false
@@ -329,9 +329,9 @@ src_bootstrap () {
     # if [ "${installed}" = "0" ]; then src_deploy_additional_component "fm-system" "Fault Management System (FMS)" ; fi
 
     # checkout the Auto Scaling Engine
-    #src_checkout_additional_component "${_openbaton_asengine_repo}" "autoscaling-engine" "Auto Scaling Engine (ASE)" "etc/ase.properties" "openbaton-ase.properties" false "tags/1.2.2"
+    src_checkout_additional_component "${_openbaton_asengine_repo}" "autoscaling-engine" "Auto Scaling Engine (ASE)" "etc/ase.properties" "openbaton-ase.properties" false "tags/1.2.2"
     # deploy and compile the Auto Scaling Engine
-    #if [ "${installed}" = "0" ]; then src_deploy_additional_component "autoscaling-engine" "Auto Scaling Engine (ASE)" ; fi
+    if [ "${installed}" = "0" ]; then src_deploy_additional_component "autoscaling-engine" "Auto Scaling Engine (ASE)" ; fi
 
     # # checkout the Network Slicing Engine
     # src_checkout_additional_component "${_openbaton_nsengine_repo}" "network-slicing-engine" "Network Slicing Engine (NSE)" "etc/nse.properties" "openbaton-nse.properties" false
