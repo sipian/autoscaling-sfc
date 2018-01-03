@@ -22,7 +22,7 @@ set -u
 #_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 _openbaton_base_repo="https://github.com/openbaton/NFVO.git"
-_openbaton_plugins="http://get.openbaton.org/plugins/stable/"
+_openbaton_plugins="http://get.openbaton.org/plugins/3.0.0/"
 _openbaton_generic_vnfm_repo="https://github.com/openbaton/generic-vnfm.git"
 _openbaton_fmsystem_repo="https://github.com/openbaton/fm-system.git"
 _openbaton_asengine_repo="https://github.com/openbaton/autoscaling-engine.git"
