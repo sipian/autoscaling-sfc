@@ -284,7 +284,7 @@ sudo systemctl restart zabbix-server.service
     $_ex 'sudo cp src/main/resources/plugin.conf.properties /etc/openbaton/openbaton-plugin-monitoring-zabbix.properties'
     $_ex 'sudo cp build/libs/*.jar ${_nfvo_plugins}'
     #echo "running jar command"
-    java -jar build/libs/*.jar
+    #java -jar build/libs/*.jar
 }
 
 
