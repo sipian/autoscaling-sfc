@@ -280,9 +280,9 @@ sudo systemctl restart zabbix-server.service
 
     $_ex 'sed -i "s_user-zbx=admin_user-zbx=Admin_g" src/main/resources/plugin.conf.properties'
     ./gradlew build
-    $_ex 'mkdir -p /etc/openbaton/plugins/monitoring'
-    $_ex 'cp src/main/resources/plugin.conf.properties /etc/openbaton/openbaton-plugin-monitoring-zabbix.properties'
-    $_ex 'cp build/lib/*.jar ${_nfvo_plugins}'
+    $_ex 'sudo mkdir -p /etc/openbaton/plugins/monitoring'
+    $_ex 'sudo cp src/main/resources/plugin.conf.properties /etc/openbaton/openbaton-plugin-monitoring-zabbix.properties'
+    $_ex 'sudo cp build/libs/*.jar ${_nfvo_plugins}'
     #echo "running jar command"
     # java -jar build/lib/*.jar
 }
