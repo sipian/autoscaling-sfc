@@ -266,8 +266,8 @@ src_zabbix_plugin() {
     ./gradlew build
     echo "check the status of zabbix plugin"
     $_ex 'mkdir -p /etc/openbaton/plugins/monitoring'
-    $_ex 'cp src/main/resources/plugin.conf.properties /etc/openbaton/plugins/monitoring/zabbix-plugin.conf'
-    echo "running jar command"
+    $_ex 'cp src/main/resources/plugin.conf.properties /etc/openbaton/openbaton-plugin-monitoring-zabbix.properties'
+    #echo "running jar command"
     # java -jar build/lib/*.jar
 }
 
