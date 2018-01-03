@@ -278,12 +278,16 @@ curl -X POST -H \"Accept: application/json\" -H \"Content-Type: application/json
 " > /usr/lib/zabbix/alertscripts
 
     sudo systemctl restart zabbix-server.service
+    sleep 8
 
     $_ex 'sed -i "s_user-zbx=admin_user-zbx=Admin_g" src/main/resources/plugin.conf.properties'
-    ./gradlew build -x test
+    ./gradlew clean build -x test
     $_ex 'sudo mkdir -p /etc/openbaton/plugins/monitoring'
     $_ex 'sudo cp src/main/resources/plugin.conf.properties /etc/openbaton/openbaton-plugin-monitoring-zabbix.properties'
     $_ex 'sudo cp build/libs/*.jar ${_nfvo_plugins}'
+    $_ex 'sudo cp build/libs/*.jar ${_nfvo_vim_drivers}'
+    
+    _nfvo_vim_drivers
     #echo "running jar command"
     #java -jar build/libs/*.jar
 }
@@ -315,14 +319,17 @@ src_bootstrap () {
     # deploy and compile OpenBaton orchestrator
     
 
-    src_deploy_nfvo
     #src_delete_openbaton_password
+
+    src_zabbix_plugin
+
+    src_deploy_nfvo
 
     # checkout the generic VNFM code
     src_checkout_additional_component "${_openbaton_generic_vnfm_repo}" "generic-vnfm" "Generic VNFM" "src/main/resources/application.properties" "openbaton-vnfm-generic.properties" true "tags/3.0.0"
     # deploy and compile the Generic VNFM
     if [ "${installed}" = "0" ]; then src_deploy_additional_component "generic-vnfm" "Generic VNFM" ; fi
-    src_zabbix_plugin
+
 
     # # checkout the Fault Management System
     # src_checkout_additional_component "${_openbaton_fmsystem_repo}" "fm-system" "Fault Management System (FMS)" "etc/fms.properties" "openbaton-fms.properties" false
