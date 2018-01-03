@@ -263,7 +263,7 @@ src_zabbix_plugin() {
     cd $HOME
     wget https://raw.githubusercontent.com/openbaton/juju-charm/develop/hooks/zbx_helper.py   
     # modify any parameters like Zabbix username and password in the main function at the bottom of the script and execute the following: 
-    python3 zbx_helper.py -a
+    python zbx_helper.py -a
 
     echo "starting installation of zabbix-plugin"
     sudo apt install -y git gradle
