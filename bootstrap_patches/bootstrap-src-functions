@@ -308,6 +308,8 @@ src_apply_patches() {
     sudo cp VNFForwardingGraphRecord.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/record/VNFForwardingGraphRecord.java
 
     cd $HOME/
+
+    sleep 120
 }
 ##############
 #### Main ####
