@@ -271,11 +271,11 @@ src_zabbix_plugin() {
     cd ${_zabbix_plugin}
     git checkout tags/3.2.0
     
-sudo echo "#!/bin/bash
+sudo sh -c 'echo "#!/bin/bash
 to=\$1
 body=\$3
 curl -X POST -H \"Accept: application/json\" -H \"Content-Type: application/json\" -d \"\$body\" http://\$to
-" > /usr/lib/zabbix/alertscripts/send_notification.sh
+" > /usr/lib/zabbix/alertscripts/send_notification.sh'
 
     sudo chmod +x /usr/lib/zabbix/alertscripts/send_notification.sh
 
