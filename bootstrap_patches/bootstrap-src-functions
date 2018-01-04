@@ -309,7 +309,7 @@ src_apply_patches() {
 
     cd $HOME/
 
-    sleep 120
+    sleep 180
 }
 ##############
 #### Main ####
