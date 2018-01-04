@@ -335,8 +335,8 @@ src_bootstrap () {
     src_checkout_additional_component "${_openbaton_generic_vnfm_repo}" "generic-vnfm" "Generic VNFM" "src/main/resources/application.properties" "openbaton-vnfm-generic.properties" true "tags/3.0.0"
     # deploy and compile the Generic VNFM
     
-    
     if [ "${brokerIp}" != "" ]; then
+      $_ex 'sed -i "s/vnfm.rabbitmq.brokerIp = localhost/vnfm.rabbitmq.brokerIp = ${brokerIp}/g" /opt/openbaton/generic-vnfm/src/main/resources/application.properties'
       $_ex 'sed -i "s/vnfm.rabbitmq.brokerIp = localhost/vnfm.rabbitmq.brokerIp = ${brokerIp}/g" /etc/openbaton/openbaton-vnfm-generic.properties'
     fi
     
@@ -352,8 +352,8 @@ src_bootstrap () {
     src_checkout_additional_component "${_openbaton_asengine_repo}" "autoscaling-engine" "Auto Scaling Engine (ASE)" "etc/ase.properties" "autoscaling.properties" false "tags/1.2.2"
     # deploy and compile the Auto Scaling Engine
     
-
     if [ "${brokerIp}" != "" ]; then
+      $_ex 'sed -i "s/autoscaling.rabbitmq.brokerIp=localhost/autoscaling.rabbitmq.brokerIp=${brokerIp}/g" /opt/openbaton/autoscaling-engine/etc/ase.properties'
       $_ex 'sed -i "s/autoscaling.rabbitmq.brokerIp=localhost/autoscaling.rabbitmq.brokerIp=${brokerIp}/g" /etc/openbaton/autoscaling.properties'
     fi
     
