@@ -286,9 +286,10 @@ curl -X POST -H \"Accept: application/json\" -H \"Content-Type: application/json
     ./gradlew clean build -x test
     $_ex 'sudo mkdir -p /etc/openbaton/plugins/monitoring'
     $_ex 'sudo cp src/main/resources/plugin.conf.properties /etc/openbaton/openbaton-plugin-monitoring-zabbix.properties'
-    $_ex 'sudo cp build/libs/*.jar ${_nfvo_plugins}'
-    $_ex 'sudo cp build/libs/*.jar ${_nfvo_vim_drivers}'
     
+    sudo cp build/libs/*.jar "${_nfvo_plugins}"
+    sudo cp build/libs/*.jar "${_nfvo_vim_drivers}"
+
     #echo "running jar command"
     #java -jar build/libs/*.jar
 }
