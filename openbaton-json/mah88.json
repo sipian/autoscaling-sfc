@@ -14,12 +14,27 @@
       "name": "http-sf",
       "type": "http",
       "endpoint": "generic",
+      "configurations": {
+        "name": "config_name",
+        "configurationParameters": [
+          {
+            "confKey": "zabbixserverip",
+            "value": ""
+          }
+        ]
+      },
       "lifecycle_event": [
         {
           "event": "INSTANTIATE",
           "lifecycle_events": [
-            "configure.sh",
+            "mah88_configure.sh",
             "start_vxlan.sh"
+          ]
+        },
+        {
+          "event": "START",
+          "lifecycle_events": [
+            "update_zabbix_agent.sh"
           ]
         }
       ],
@@ -34,7 +49,7 @@
           "flavour_key": "m1.small"
         }
       ],
-      "vnfPackageLocation": "https://github.com/mah88/SF_VNF_scripts.git",
+      "vnfPackageLocation": "https://github.com/sipian/vnf-scripts.git",
       
       "vdu": [
         {
@@ -95,7 +110,7 @@
               "metric": "system.cpu.load[percpu,avg1]",
               "statistic": "avg",
               "comparisonOperator": ">",
-              "threshold": 0.70,
+              "threshold": 0.20,
               "weight": 1
             }
           ],

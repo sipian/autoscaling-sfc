@@ -19,7 +19,7 @@
         "configurationParameters": [
           {
             "confKey": "zabbixserverip",
-            "value": "10.0.0.12"
+            "value": ""
           }
         ]
       },
@@ -85,7 +85,7 @@
         "configurationParameters": [
           {
             "confKey": "zabbixserverip",
-            "value": "10.0.0.12"
+            "value": ""
           }
         ]
       },
