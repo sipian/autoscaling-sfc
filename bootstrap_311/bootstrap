@@ -287,9 +287,9 @@ main () {
     if [ "$choice" = "y" ]; then
         prerequiste
         echo "\n\n****************************\n\n"
-        echo "Zabbix Server has been installed. Quickly setup the server in midori before zabbix plugin setup starts.\nThis will sleep for 10 seconds"
+        echo "Zabbix Server has been installed. Quickly setup the server in midori before zabbix plugin setup starts.\nThis will sleep for 15 seconds"
         echo "\n\n****************************\n\n"
-        sleep 10
+        sleep 15
     fi
 
     # In case of "noninteractive" FRONTEND the latest RELEASE package will be installed
