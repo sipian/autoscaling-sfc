@@ -1,5 +1,5 @@
 {
-  "name": "NSD iperf + privateIPs",
+  "name": "Scale",
   "vendor": "FOKUS",
   "version": "1.0",
   "vld": [
@@ -19,7 +19,7 @@
         "configurationParameters": [
           {
             "confKey": "zabbixserverip",
-            "value": "10.0.0.5"
+            "value": "10.0.0.12"
           }
         ]
       },
@@ -85,7 +85,7 @@
         "configurationParameters": [
           {
             "confKey": "zabbixserverip",
-            "value": "10.0.0.5"
+            "value": "10.0.0.12"
           }
         ]
       },
