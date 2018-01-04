@@ -14,6 +14,15 @@
       "name": "iperf-client",
       "type": "client",
       "endpoint": "generic",
+      "configurations": {
+        "name": "config_name",
+        "configurationParameters": [
+          {
+            "confKey": "zabbixserverip",
+            "value": "10.0.0.13"
+          }
+        ]
+      },
       "lifecycle_event": [
         {
           "event": "CONFIGURE",
@@ -71,6 +80,15 @@
       "name": "iperf-server",
       "vendor": "FOKUS",
       "version": "1.0",
+      "configurations": {
+        "name": "config_name",
+        "configurationParameters": [
+          {
+            "confKey": "zabbixserverip",
+            "value": "10.0.0.13"
+          }
+        ]
+      },
       "lifecycle_event": [
         {
           "event": "INSTANTIATE",
