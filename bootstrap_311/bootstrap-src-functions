@@ -327,9 +327,19 @@ src_bootstrap () {
 
     src_deploy_nfvo
 
+    
+    brokerIp="$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)"
+    export brokerIp=${brokerIp}
+    
     # checkout the generic VNFM code
     src_checkout_additional_component "${_openbaton_generic_vnfm_repo}" "generic-vnfm" "Generic VNFM" "src/main/resources/application.properties" "openbaton-vnfm-generic.properties" true "tags/3.0.0"
     # deploy and compile the Generic VNFM
+    
+    
+    if [ "${brokerIp}" != "" ]; then
+      $_ex 'sed -i "s/vnfm.rabbitmq.brokerIp = localhost/vnfm.rabbitmq.brokerIp = ${brokerIp}/g" /etc/openbaton/openbaton-vnfm-generic.properties'
+    fi
+    
     if [ "${installed}" = "0" ]; then src_deploy_additional_component "generic-vnfm" "Generic VNFM" ; fi
 
 
@@ -341,6 +351,12 @@ src_bootstrap () {
     # checkout the Auto Scaling Engine
     src_checkout_additional_component "${_openbaton_asengine_repo}" "autoscaling-engine" "Auto Scaling Engine (ASE)" "etc/ase.properties" "autoscaling.properties" false "tags/1.2.2"
     # deploy and compile the Auto Scaling Engine
+    
+
+    if [ "${brokerIp}" != "" ]; then
+      $_ex 'sed -i "s/autoscaling.rabbitmq.brokerIp=localhost/autoscaling.rabbitmq.brokerIp=${brokerIp}/g" /etc/openbaton/autoscaling.properties'
+    fi
+    
     if [ "${installed}" = "0" ]; then src_deploy_additional_component "autoscaling-engine" "Auto Scaling Engine (ASE)" ; fi
 
     # # checkout the Network Slicing Engine
