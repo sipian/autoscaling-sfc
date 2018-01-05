@@ -142,8 +142,8 @@
         {
           "name": "scale-out",
           "threshold": 1,
-          "period": 5,
-          "cooldown": 8,
+          "period": 30,
+          "cooldown": 90,
           "comparisonOperator": ">=",
           "mode": "REACTIVE",
           "type": "WEIGHTED",
@@ -152,7 +152,7 @@
               "metric": "net.if.in[ens3, bytes]",
               "statistic": "max",
               "comparisonOperator": ">",
-              "threshold": 1,
+              "threshold": 1000,
               "weight": 1
             }
           ],
