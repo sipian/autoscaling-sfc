@@ -38,6 +38,8 @@ public class Policy implements Serializable {
   @Id private String id;
   @Version private int version = 0;
   private ACL_Matching_Criteria acl_matching_criteria;
+  private String qos_level;
+
 
   public Policy() {}
 
@@ -61,4 +63,13 @@ public class Policy implements Serializable {
   public void setMatchingCriteria(ACL_Matching_Criteria matching_criteria) {
     this.acl_matching_criteria = matching_criteria;
   }
+  
+  public String getQoSLevel() {
+    return qos_level;
+  }
+
+  public void setQoSLevel(String qos) {
+    this.qos_level = qos;
+  }
+
 }
