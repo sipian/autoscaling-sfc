@@ -323,6 +323,7 @@ src_bootstrap () {
     # checkout OpenBaton
     src_checkout_nfvo
     
+    echo "change source code when things are done , type anything and enter"
     read trial
     
     # check if all the required libraries are available
