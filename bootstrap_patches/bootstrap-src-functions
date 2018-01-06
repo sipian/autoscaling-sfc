@@ -144,22 +144,22 @@ src_checkout_nfvo () {
     rm -rf ./dashboard/
     git checkout tags/3.0.1
 
-    #echo "copying files"
-    #$_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/ACL_Matching_Criteria.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/descriptor/ACL_Matching_Criteria.java"
+    echo "copying files"
+    $_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/ACL_Matching_Criteria.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/descriptor/ACL_Matching_Criteria.java"
     
-    #echo "copying files 1"
-    #$_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/NSRUtils.java /opt/openbaton/nfvo/core/core-impl/src/main/java/org/openbaton/nfvo/core/utils/NSRUtils.java"
+    echo "copying files 1"
+    $_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/NSRUtils.java /opt/openbaton/nfvo/core/core-impl/src/main/java/org/openbaton/nfvo/core/utils/NSRUtils.java"
 
-    #echo "copying files 2"
-    #$_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/Policy.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/descriptor/Policy.java"
+    echo "copying files 2"
+    $_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/Policy.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/descriptor/Policy.java"
 
-    #echo "copying files 3"
-    #$_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/VNFForwardingGraphDescriptor.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/descriptor/VNFForwardingGraphDescriptor.java"
+    echo "copying files 3"
+    $_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/VNFForwardingGraphDescriptor.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/descriptor/VNFForwardingGraphDescriptor.java"
 
-    #echo "copying files 4"
-    #$_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/VNFForwardingGraphRecord.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/record/VNFForwardingGraphRecord.java"
+    echo "copying files 4"
+    $_ex 'cp '"/home/ubuntu/autoscaling-sfc/bootstrap_patches/patched_code/VNFForwardingGraphRecord.java /opt/openbaton/nfvo/openbaton-libs/catalogue/src/main/java/org/openbaton/catalogue/mano/record/VNFForwardingGraphRecord.java"
 
-    #echo "copying files 5"
+    echo "copying files 5"
 
     $_ex 'rm -rf '"${_openbaton_conf}; mkdir -p ${_openbaton_conf}"
     $_ex 'cp '"${_nfvo}/etc/openbaton.properties ${_openbaton_conf}/openbaton.properties" 
@@ -322,10 +322,7 @@ src_bootstrap () {
 
     # checkout OpenBaton
     src_checkout_nfvo
-    
-    echo "change source code when things are done , type anything and enter"
-    read trial
-    
+
     # check if all the required libraries are available
     src_check_environment
 
