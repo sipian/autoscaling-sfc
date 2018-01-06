@@ -277,7 +277,7 @@ prerequiste () {
     sudo systemctl start zabbix-server
     sudo systemctl enable zabbix-server
 
-    cd $HOME/autoscaling-sfc/bootstrap_311
+    cd $HOME/autoscaling-sfc/bootstrap_patches
 
 }
 
