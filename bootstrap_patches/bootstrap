@@ -362,6 +362,7 @@ main () {
     fi
 
     log_success_msg "Open Baton installation complete"
+    sfco_changes
 }
 
 prereq () {
