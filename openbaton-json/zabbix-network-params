@@ -1,0 +1,38 @@
+Units
+  bytes
+  packets
+  
+Name
+  incoming bytes 
+Item
+  net.if.in[ens3, bytes]
+  
+Name
+  incoming packets 
+Item
+  net.if.in[ens3, packets]
+
+++++++++++++++++++++++++++++++++++++++++ 
+ Name
+  outgoing bytes 
+Item
+  net.if.out[ens3, bytes]
+
+Name
+  outgoing packets 
+Item
+  net.if.out[ens3, packets]
+  
+++++++++++++++++++++++++++++++++++++++++ 
+ Name
+  total bytes 
+Item
+  net.if.total[ens3, bytes]
+  
+Name
+  total packets 
+Item
+  net.if.total[ens3, packets]
+
+
+
