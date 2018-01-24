@@ -1,20 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-ubuntu@openbaton:~/openbaton-client$ cd cli/
-ubuntu@openbaton:~/openbaton-client/cli$ ls
-build  build.gradle  gradle  src
-ubuntu@openbaton:~/openbaton-client/cli$ cat build.gradle 
 /*
  * Copyright (c) 2016 Open Baton (http://www.openbaton.org)
  *
@@ -92,5 +76,4 @@ task fatJar(type: Jar) {
 }
 
 jar.dependsOn fatJar
-ubuntu@openbaton:~/openbaton-client/cli$ 
 
