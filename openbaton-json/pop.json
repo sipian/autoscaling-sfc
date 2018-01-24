@@ -1,10 +1,10 @@
 {  
    "name":"test",
-   "authUrl":"http://192.168.136.83/identity/v2.0/",
+   "authUrl":"http://192.168.136.83:5000/v2.0",
    "tenant":"admin",
    "username":"admin",
    "password":"secret",
-   "keyPair":"finalopenbaton",
+   "keyPair":"openstack",
    "securityGroups":[  
       "default"
    ],
