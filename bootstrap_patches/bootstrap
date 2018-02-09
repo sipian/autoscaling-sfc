@@ -326,7 +326,7 @@ sfco_changes () {
 
 
 main () {
-    read -p "Do you want to directly jump to sfco changes and apply patch files and exit y/n : " choice
+    read -p "Do you want to (directly jump to sfco changes and apply patch files and exit(assuming openbaton setup is done)) or (want to install everything from scratch and start sfco) y/n : " choice
     if [ "$choice" = "y" ]; then
         sfco_changes
         exit 
