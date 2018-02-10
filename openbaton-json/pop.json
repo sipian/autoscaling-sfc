@@ -1,9 +1,9 @@
 {  
-   "name":"test",
-   "authUrl":"http://192.168.136.83:5000/v2.0",
-   "tenant":"admin",
+   "name":"openstack",
+   "authUrl":"https://192.16.1.222:5000/v3",
+   "tenant":"4f87ea7d2a9b4547bf6bac2b55f5b604",
    "username":"admin",
-   "password":"secret",
+   "password":"49ef27251b38c5124378010e7be8758eb",
    "keyPair":"openstack",
    "securityGroups":[  
       "default"
