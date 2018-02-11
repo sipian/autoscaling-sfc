@@ -321,12 +321,12 @@ sfco_changes () {
     read dummy
     ./sfc-orch.sh compile
     echo -e "sfco is compiled now . Update ./src/main/resources/sfco.properties with proper parameters \n When that is done type ./sfc-orch.sh start_fg"
-        #./sfc-orch.sh start_fg
+    #./sfc-orch.sh start_fg
 }
 
 
 main () {
-    read -p "Do you want to (directly jump to sfco changes and apply patch files and exit(assuming openbaton setup is done)) or (want to install everything from scratch and start sfco) y/n : " choice
+    read -p "Do you want to (directly jump to sfco changes and apply patch files and exit(assuming openbaton setup is done))-y or (want to install everything from scratch and start sfco)-n y/n : " choice
     if [ "$choice" = "y" ]; then
         sfco_changes
         exit 
