@@ -318,7 +318,6 @@ sfco_changes () {
     sed -i "s/spring.rabbitmq.host=/spring.rabbitmq.host=${brokerIp}/g" ./src/main/resources/application.properties
     cp /home/ubuntu/autoscaling-sfc/bootstrap_patches/sfc_changes/sfco.properties ./src/main/resources/sfco.properties
     mysql --user="root" --password="root" --execute="create database sfco;"
-    read dummy
     ./sfc-orch.sh compile
     echo -e "sfco is compiled now . Update ./src/main/resources/sfco.properties with proper parameters \n When that is done type ./sfc-orch.sh start_fg"
     #./sfc-orch.sh start_fg
