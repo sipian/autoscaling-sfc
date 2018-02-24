@@ -1,6 +1,6 @@
 {  
    "name":"openstack",
-   "authUrl":"https://192.16.1.222:5000/v2.0",
+   "authUrl":"http://10.1.0.222:5000/v2.0",
    "tenant":"admin",
    "username":"admin",
    "password":"49ef27251b38c5124378010e7be8758eb",
