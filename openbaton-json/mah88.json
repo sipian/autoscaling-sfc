@@ -46,7 +46,7 @@
       ],
       "deployment_flavour": [
         {
-          "flavour_key": "m1.small"
+          "flavour_key": "m1.tiny"
         }
       ],
       "vnfPackageLocation": "https://github.com/sipian/vnf-scripts.git",
@@ -57,13 +57,14 @@
             "ubuntu"
           ],
           "vimInstanceName": [
-            "test"
+            "openstack"
           ],
           "scale_in_out": 4,
           "vnfc": [
             {
               "connection_point": [
                 {
+                  "floatingIp":"random",
                   "interfaceId": 0,
                   "virtual_link_reference": "private"
                 }
