@@ -284,7 +284,7 @@ prerequiste () {
 
 
 sfco_changes () {
-    cd /home/ubuntu
+    cd ~/
     git clone https://github.com/openbaton/openbaton-libs.git
     cd openbaton-libs
     git checkout tags/3.0.0
@@ -294,7 +294,7 @@ sfco_changes () {
     ./gradlew build --refresh-dependencies 
     ./gradlew install
 
-    cd /home/ubuntu
+    cd ~/
     git clone https://github.com/openbaton/openbaton-client.git
     cd openbaton-client
     git checkout tags/3.0.0
@@ -302,21 +302,21 @@ sfco_changes () {
     sed -i "s_3.0.0_3.9.9_g" ./gradle.properties
     
     rm ./build.gradle ./cli/build.gradle ./sdk/build.gradle
-    cp /home/ubuntu/autoscaling-sfc/bootstrap_patches/sfc_changes/opebaton-client-build-gradle ./build.gradle
-    cp /home/ubuntu/autoscaling-sfc/bootstrap_patches/sfc_changes/openbaton-libs-cli-build-gradle ./cli/build.gradle
-    cp /home/ubuntu/autoscaling-sfc/bootstrap_patches/sfc_changes/openbaton-libs-sdk-build-gradle ./sdk/build.gradle
+    cp $curr_dir/sfc_changes/opebaton-client-build-gradle ./build.gradle
+    cp $curr_dir/sfc_changes/openbaton-libs-cli-build-gradle ./cli/build.gradle
+    cp $curr_dir/sfc_changes/openbaton-libs-sdk-build-gradle ./sdk/build.gradle
     
     ./gradlew build --refresh-dependencies 
     ./gradlew install
 
-    cd /home/ubuntu
+    cd ~/
     git clone https://github.com/mah88/sfc-orchestrator.git
     cd sfc-orchestrator
 
     brokerIp="$(ip -f inet -o addr show ens3|cut -d\  -f 7 | cut -d/ -f 1;)"
     export brokerIp=${brokerIp}
     sed -i "s/spring.rabbitmq.host=/spring.rabbitmq.host=${brokerIp}/g" ./src/main/resources/application.properties
-    cp /home/ubuntu/autoscaling-sfc/bootstrap_patches/sfc_changes/sfco.properties ./src/main/resources/sfco.properties
+    cp $curr_dir/sfc_changes/sfco.properties ./src/main/resources/sfco.properties
     mysql --user="root" --password="root" --execute="create database sfco;"
     ./sfc-orch.sh compile
     echo -e "sfco is compiled now . Update ./src/main/resources/sfco.properties with proper parameters \n When that is done type ./sfc-orch.sh start_fg"
