@@ -218,6 +218,7 @@ install_mysql () {
 
 main_src () {
     #wget "${OPENBATON_BOOTSTRAP_SRC_FUNCTIONS_URL}"
+    cd $curr_dir
     . ./bootstrap-src-functions
     src_bootstrap
 }
